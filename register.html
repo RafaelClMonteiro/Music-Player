@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css'
+    rel='stylesheet'>
+    <link rel="stylesheet" href="registerStyle.css">  
+    <title>Register</title>
+</head>
+<body>
+    <div class="background">
+        <img src="assets/LoginBg.jpg" alt="">
+    </div>
+
+    <div class="container">
+        <h1>Sign Up</h1>
+
+        <div class="input-box">
+            <input type="text" placeholder="Username" required>
+            <i class='bx bx-user'></i>
+        </div>
+        
+        <div class="input-box">
+            <input type="text" placeholder="Password" required>
+            <i class='bx bx-lock-alt' ></i>
+        </div>
+
+        <div class="input-box">
+            <input type="text" placeholder="Confirm Password" required>
+            <i class='bx bx-lock-alt' ></i>
+        </div>
+        
+        <button class="login-btn">Register</button>
+
+        <p class="register-text">Already have an account?
+            <button class="register-btn" onclick="window.location.href='login.html';">Login</button>
+        </p>
+    </div>
+</body>
+</html>

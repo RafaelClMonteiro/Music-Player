@@ -11,7 +11,8 @@ const img = document.getElementById('cover'),
     background = document.getElementById('bg-image'),
     searchInput = document.getElementById('music-url');
     suggestions = document.getElementById('suggestions');
-
+    volumeSlider = document.getElementById('volume-slider');
+    volumeIcon = document.querySelector('.volume-control i');  
 
 const music = new Audio();
 
@@ -86,20 +87,19 @@ function changeMusic(direction){
     musicIndex = (musicIndex + direction + songs.length) %
     songs.length;
 
-    loadMusic(songs[musicIndex]);
-    playMusic();
+    loadMusic(songs[musicIndex]); 
+    playMusic(); 
 }
 
 function updateProgressBar(){
-    const { duration, currentTime } = music;
-    const progressPercent = (duration ? (currentTime / duration) * 100 : 0);
+    const { duration, currentTime } = music; 
+    const progressPercent = (duration ? (currentTime / duration) * 100 : 0); 
 
-
-    progress.style.width = `${progressPercent}%`;
+    progress.style.width = `${progressPercent}%`; 
 
     const formatTime = (time) => String(Math.floor(time)).padStart(2, '0');
     durationEl.textContent = `${formatTime(duration / 60)}:${formatTime(duration % 60)}`;
-    currentTimeEl.textContent = `${formatTime(currentTime / 60)}:${formatTime(currentTime % 60)}`;
+    currentTimeEl.textContent = `${formatTime(currentTime / 60)}:${formatTime(currentTime % 60)}`; 
 }
 
 function setProgressBar (e) {
@@ -108,12 +108,33 @@ function setProgressBar (e) {
     music.currentTime = (clickX / width) * music.duration;
 }
 
-playBtn.addEventListener('click', togglePlay);
-backBtn.addEventListener('click', () => changeMusic(-1));
-forwardBtn.addEventListener('click', () => changeMusic(1));
-music.addEventListener('ended', () => changeMusic(1));
-music.addEventListener('timeupdate', updateProgressBar);
-player.addEventListener('click', setProgressBar);
+
+music.volume = 0.5;
+
+
+function updateVolumeIcon() {
+    const volume = music.volume * 100;  
+
+    if (volume === 0) {
+        volumeIcon.className = 'bx bxs-volume-mute';  
+    } else if (volume > 0 && volume <= 33) {
+        volumeIcon.className = 'bx bxs-volume';  
+    } else if (volume > 33 && volume <= 66) {
+        volumeIcon.className = 'bx bxs-volume-low';  
+    } else {
+        volumeIcon.className = 'bx bxs-volume-full';  
+    }
+}
+
+
+volumeSlider.addEventListener('input', (e) => {
+    music.volume = e.target.value / 100;  
+    updateVolumeIcon();  
+});
+
+
+updateVolumeIcon();
+
 searchInput.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase();
     suggestions.innerHTML = '';
@@ -129,14 +150,21 @@ searchInput.addEventListener('input', () => {
             li.addEventListener('click', () => {
                 loadMusic(song);
                 playMusic();
-                suggestions.innerHTML = '';  // Clear suggestions after selection
-                searchInput.value = '';  // Clear the search input
+                suggestions.innerHTML = '';  
+                searchInput.value = '';  
             });
             suggestions.appendChild(li);
         });
     }
 });
 
+
+playBtn.addEventListener('click', togglePlay);
+backBtn.addEventListener('click', () => changeMusic(-1));
+forwardBtn.addEventListener('click', () => changeMusic(1));
+music.addEventListener('ended', () => changeMusic(1));
+music.addEventListener('timeupdate', updateProgressBar);
+player.addEventListener('click', setProgressBar);
 
 loadMusic(songs[musicIndex]);
 music.play();
