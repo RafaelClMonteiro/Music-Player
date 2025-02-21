@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMessage.classList.add("active");
       return;
     }
+
+    const API_URL = "https://music-player-kohl-alpha.vercel.app";
   
     form.addEventListener("submit", async (event) => {
       event.preventDefault(); 
@@ -25,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       try {
-        const response = await fetch("http://localhost:5000/api/auth/login", {
+        const response = await fetch('${API_URL}/login', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
