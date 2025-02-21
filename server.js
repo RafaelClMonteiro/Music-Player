@@ -9,7 +9,7 @@ const path = require('path');
 const app = express();
 
 app.use(cors({
-  origin: "https://music-player-kohl-alpha.vercel.app",  
+  origin: ["http://localhost:5000", "https://music-player-kohl-alpha.vercel.app"],  
   methods: "GET,POST",
   allowedHeaders: "Content-Type"
 }));
