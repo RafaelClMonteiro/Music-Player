@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("https://music-player-kohl-alpha.vercel.app", {
+      const response = await fetch("https://music-player-kohl-alpha.vercel.app/api/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, confirmPassword }),
