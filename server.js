@@ -16,13 +16,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Conexão com o MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB conectado"))
   .catch(err => console.log(err));
 
+// Roteamento
 app.use("/api/auth", authRoutes);
+
 app.use(express.static(path.join(__dirname)));
 
+// Roteamento para páginas HTML
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));
 });
@@ -35,11 +39,5 @@ app.get("/musicPlayer", (req, res) => {
   res.sendFile(path.join(__dirname, "musicPlayer.html"));
 });
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Teste com * primeiro, depois podemos restringir
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
+// Inicia o servidor
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
