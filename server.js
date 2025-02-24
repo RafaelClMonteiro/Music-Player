@@ -15,13 +15,13 @@ app.use(cors({
   allowedHeaders: "Content-Type"
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB conectado"))
   .catch(err => console.log(err));
 
 app.use("/api/auth", authRoutes);
+app.use(express.static(path.join(__dirname)));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));
@@ -33,6 +33,13 @@ app.get("/register", (req, res) => {
 
 app.get("/musicPlayer", (req, res) => {
   res.sendFile(path.join(__dirname, "musicPlayer.html"));
+});
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Teste com * primeiro, depois podemos restringir
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
 });
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
