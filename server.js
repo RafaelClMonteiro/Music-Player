@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:5000", "https://music-player-kohl-alpha.vercel.app/api/auth"],  
+  origin: ["http://localhost:5000", "https://music-player-kohl-alpha.vercel.app"],  
   methods: "GET,POST",
   allowedHeaders: "Content-Type"
 }));
