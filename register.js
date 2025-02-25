@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
     const errorMessage = document.getElementById("error-message");
 
+    const API_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "https://music-player-kohl-alpha.vercel.app";
+
     errorMessage.innerText = "";
 
     if (!username || !password || !confirmPassword) {
@@ -39,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("https://music-player-kohl-alpha.vercel.app/api/auth", {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, confirmPassword }),

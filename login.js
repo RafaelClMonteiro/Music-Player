@@ -8,7 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
   }
 
-  const API_URL = "https://music-player-kohl-alpha.vercel.app";
+  const API_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "https://music-player-kohl-alpha.vercel.app";
 
   form.addEventListener("submit", async (event) => {
       event.preventDefault();
