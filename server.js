@@ -1,8 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
 
 const authRoutes = require("./player-music-backend/routes/AuthRoutes.js");
 
@@ -21,7 +21,7 @@ app.use(express.json());
 // Conexão com MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB conectado"))
-  .catch(err => console.log(err));
+  .catch(err => console.log( "Erro ao conectar com o mongoDB", err));
 
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname))); // Serve .js e .html da raiz
