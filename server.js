@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.log(err));
 
 // Servir arquivos estáticos
-app.use(express.static(__dirname)); // Serve arquivos .js e .html na raiz
+app.use(express.static(path.join(__dirname))); // Serve arquivos .js e .html na raiz
 app.use("/styles", express.static(path.join(__dirname, "styles"))); // Serve CSS
 app.use("/assets", express.static(path.join(__dirname, "assets"))); // Serve imagens
 
