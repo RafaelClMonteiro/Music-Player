@@ -9,7 +9,13 @@ const authRoutes = require("./player-music-backend/routes/AuthRoutes.js");
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-// Configuração de CORS
+const jwtSecretKey = process.env.JWT_SECRETKEY;
+const mongoUri = process.env.MONGODB_URI;
+
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Conectado ao MongoDB'))
+  .catch(err => console.error('Erro ao conectar ao MongoDB', err));
+
 app.use(cors({
   origin: ["http://localhost:5000", "https://music-player-kohl-alpha.vercel.app"],
   methods: ["GET", "POST"],
@@ -18,22 +24,13 @@ app.use(cors({
 
 app.use(express.json());
 
-// Conexão com MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB conectado"))
-  .catch(err => console.log( "Erro ao conectar com o mongoDB", err));
+app.use(express.static(path.join(__dirname))); 
+app.use("/styles", express.static(path.join(__dirname, "styles"))); 
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname))); // Serve .js e .html da raiz
-app.use("/styles", express.static(path.join(__dirname, "styles"))); // Serve arquivos CSS
-
-// Rotas de API
 app.use("/api/auth", authRoutes);
 
-// Rotas HTML
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
 app.get("/register", (req, res) => res.sendFile(path.join(__dirname, "register.html")));
 app.get("/musicPlayer", (req, res) => res.sendFile(path.join(__dirname, "musicPlayer.html")));
 
-// Inicia o servidor
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
