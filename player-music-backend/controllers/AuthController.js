@@ -1,7 +1,7 @@
 const User = require("../models/user.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const connectDB = require("../../db");
+const connectDB = require("../../db"); 
 
 exports.registerUser = async (req, res) => {
   try {
@@ -39,7 +39,7 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    await connectDB();
+    await connectDB(); 
 
     const { username, password } = req.body;
 

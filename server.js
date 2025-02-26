@@ -12,7 +12,7 @@ const port = 5000;
 app.use(express.static('.')); 
 
 app.use(cors({
-  origin: ['http://localhost:5000', 'http://music-player-kohl-alpha.vercel.app'],
+  origin: ['http://localhost:5000', 'https://music-player-kohl-alpha.vercel.app'],
   credentials: true
 }));
 
@@ -22,11 +22,6 @@ app.get("/", (req, res) => {
   res.redirect("/login.html"); 
 });
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("Conectado ao MongoDB"))
-  .catch((error) => console.error("Erro ao conectar ao MongoDB:", error));
-
-
 app.use("/auth", authRoutes); 
 
 app.use((err, req, res, next) => {
@@ -34,6 +29,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Erro interno no servidor" });
 });
 
+// Rodar o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
