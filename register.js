@@ -16,9 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
     const errorMessage = document.getElementById("error-message");
 
-    const API_URL = window.location.hostname === "localhost"
-  ? "http://localhost:5000"
-  : "https://music-player-kohl-alpha.vercel.app";
+    const API_URL = "/auth";
 
     errorMessage.innerText = "";
 
@@ -43,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/register`, {
+      const response = await fetch(`${API_URL}/register`, {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, confirmPassword }),

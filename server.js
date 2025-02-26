@@ -1,39 +1,39 @@
-require("dotenv").config();
 const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const authRoutes = require("./player-music-backend/routes/AuthRoutes");
 
-const authRoutes = require("./player-music-backend/routes/AuthRoutes.js");
+dotenv.config();
 
-const PORT = process.env.PORT || 5000;
 const app = express();
+const port = 5000;
 
-const jwtSecretKey = process.env.JWT_secretkey;
-const mongoUri = process.env.mongodb_uri;
-
-mongoose.connect(mongoUri)
-  .then(() => console.log('Conectado ao MongoDB'))
-  .catch(err => console.error('Erro ao conectar ao MongoDB', err));
+app.use(express.static('.')); 
 
 app.use(cors({
-  origin: ["http://localhost:5000", "https://music-player-kohl-alpha.vercel.app"],
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: ['http://localhost:5000', 'http://music-player-kohl-alpha.vercel.app'],
+  credentials: true
 }));
 
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname))); 
-app.use("/styles", express.static(path.join(__dirname, "styles"))); 
+app.get("/", (req, res) => {
+  res.redirect("/login.html"); 
+});
 
-app.use("/api/auth", authRoutes);
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("Conectado ao MongoDB"))
+  .catch((error) => console.error("Erro ao conectar ao MongoDB:", error));
 
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
-app.get("/register", (req, res) => res.sendFile(path.join(__dirname, "register.html")));
-app.get("/musicPlayer", (req, res) => res.sendFile(path.join(__dirname, "musicPlayer.html")));
 
-// Tratamento para favicon.ico para evitar erro 404
-app.get("/favicon.ico", (req, res) => res.status(204).end());
+app.use("/auth", authRoutes); 
 
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Erro interno no servidor" });
+});
+
+app.listen(port, () => {
+  console.log(`Servidor rodando em http://localhost:${port}`);
+});

@@ -8,9 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
   }
 
-  const API_URL = window.location.hostname === "localhost"
-  ? "http://localhost:5000"
-  : "https://music-player-kohl-alpha.vercel.app";
+  const API_URL = "/auth";  
 
   form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -28,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const response = await fetch(`${API_URL}/api/auth/login`, {
+        const response = await fetch(`${API_URL}/login`, {  // Aqui corrigido para o endpoint correto
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
