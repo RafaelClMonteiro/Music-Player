@@ -9,10 +9,10 @@ const authRoutes = require("./player-music-backend/routes/AuthRoutes.js");
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-const jwtSecretKey = process.env.JWT_SECRETKEY;
-const mongoUri = process.env.MONGODB_URI;
+const jwtSecretKey = process.env.JWT_secretkey;
+const mongoUri = process.env.mongodb_uri;
 
-mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoUri)
   .then(() => console.log('Conectado ao MongoDB'))
   .catch(err => console.error('Erro ao conectar ao MongoDB', err));
 
@@ -32,5 +32,8 @@ app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
 app.get("/register", (req, res) => res.sendFile(path.join(__dirname, "register.html")));
 app.get("/musicPlayer", (req, res) => res.sendFile(path.join(__dirname, "musicPlayer.html")));
+
+// Tratamento para favicon.ico para evitar erro 404
+app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
