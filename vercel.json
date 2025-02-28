@@ -12,6 +12,18 @@
       "dest": "server.js"
     },
     {
+      "src": "/styles/(.*)\\.css",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(login|register|playerScript)\\.js",
+      "dest": "server.js"
+    },
+    {
+      "src": "/LoginBg\\.jpg",
+      "dest": "server.js"
+    },
+    {
       "src": "/auth/(.*)",
       "dest": "server.js"
     },
