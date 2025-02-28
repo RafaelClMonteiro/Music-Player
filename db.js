@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
+  console.log('MONGODB_URI no db.js:', process.env.MONGODB_URI); 
   if (mongoose.connection.readyState >= 1) return mongoose.connection;
 
   try {
