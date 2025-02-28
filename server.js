@@ -20,14 +20,24 @@ app.use(express.json());
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
 
-app.get("/", (req, res) => {
-  res.redirect("/login.html"); 
+app.get('/register.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'register.html'));
+});
+
+app.get('/musicPlayer.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'musicPlayer.html'));
 });
 
 
-app.use("/auth", authRoutes); 
+app.get("/", (req, res) => {
+  res.redirect("/login.html");
+});
 
+app.use("/auth", authRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -8,6 +8,18 @@
   ],
   "routes": [
     {
+      "src": "/(login|register|musicPlayer)\\.html",
+      "dest": "server.js"
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "server.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "server.js"
     }
